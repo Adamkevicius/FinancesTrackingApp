@@ -10,6 +10,8 @@ import SwiftUI
 struct SignUpView: View {
     @StateObject private var viewModel = SignUpViewModel()
     
+    @FocusState private var isFocused: Bool
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -27,10 +29,13 @@ struct SignUpView: View {
                     
                     Group {
                         SignTextFieldView(title: "Email", inputText: "Enter your email", text: $viewModel.email)
+                            .focused($isFocused)
                         
                         SignTextFieldView(title: "Username", inputText: "Enter your username", text: $viewModel.username)
+                            .focused($isFocused)
                         
                         SecuredSignTextFieldView(title: "Password", inputText: "Enter your password", text: $viewModel.password)
+                            .focused($isFocused)
                     }
                     
                     AuthProviderButtonView()
@@ -59,6 +64,9 @@ struct SignUpView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.primaryBackground.gradient)
+            .onTapGesture {
+                isFocused = false
+            }
         }
     }
 }

@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct SignInView: View {
-    @StateObject var viewModel = SignInViewModel()
+    @StateObject private var viewModel = SignInViewModel()
+    
+    @FocusState private var isFocused: Bool
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -25,8 +28,10 @@ struct SignInView: View {
                         .padding(.bottom, 30)
                     
                     SignTextFieldView(title: "Email", inputText: "Enter your email", text: $viewModel.email)
+                        .focused($isFocused)
                     
                     SecuredSignTextFieldView(title: "Password", inputText: "Enter your password", text: $viewModel.password)
+                        .focused($isFocused)
                     
                     NavigationLink {
                         //  TODO: add password recovery logic
@@ -42,13 +47,19 @@ struct SignInView: View {
                     AuthProviderButtonView()
                     
                     Button {
-                        
+                        viewModel.bottomSheet.toggle()
                     } label: {
                         Text("Sign In")
                     }
                     .disabled(viewModel.isFormValid)
                     .opacity(viewModel.isFormValid ? 0.6 : 1)
                     .buttonStyle(GrowingButtonStyle())
+                    .sheet(isPresented: $viewModel.bottomSheet) {
+                        OTPVerificationView()
+                    }
+                    .onTapGesture {
+                        isFocused = false
+                    }
                     
                     HStack {
                         Text("New User?")
@@ -69,6 +80,9 @@ struct SignInView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.primaryBackground.gradient)
+            .onTapGesture {
+                isFocused = false
+            }
         }
     }
 }

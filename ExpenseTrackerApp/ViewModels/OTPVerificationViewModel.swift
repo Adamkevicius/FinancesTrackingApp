@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
+
+class OTPVerificationViewModel: ObservableObject {
+    @Published var otpCode: String = ""
+    
+    func verifyCode() -> Bool {
+        //  TODO: ADD OTP VERIFICATION LOGIC
+        return otpCode == "777777"
+    }
+    
+}
