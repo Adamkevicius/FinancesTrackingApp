@@ -10,7 +10,10 @@ import Foundation
 class SignInViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
-    @Published var bottomSheet = false
+    @Published var recoveryBottomSheet = false
+    @Published var verificationBottomSheet = false
+    @Published var isPasswordRecovery = false
+    @Published var isSheetDisappear = false
     
     var isFormValid: Bool {
         email.isEmpty || password.isEmpty

@@ -9,11 +9,25 @@ import SwiftUI
 
 struct OTPTextFieldView: View {
     @Binding var otpCode: String
+    
     @FocusState private var isFocused: Bool
+    
     @State private var showAlert = false
-        
+    
     let onSubmit: () -> Bool
     
+    @State private var passwordRecoveryView = false
+    
+    @State private var notPasswordRevoceryView = false
+    
+    private var isFormValid: Bool {
+        otpCode.count > 0
+    }
+    
+    @Binding var isPasswordRecovery: Bool
+    
+    @Environment(\.dismiss) private var dismiss
+        
     var body: some View {
         VStack(spacing: 20) {
             ZStack {
@@ -34,7 +48,7 @@ struct OTPTextFieldView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(otpCode.count == index ? Color.blue : Color.black, lineWidth: 3)
                                 .frame(width: 45, height: 45)
-                            
+                                                        
                             Text(index < otpCode.count ? String(Array(otpCode)[index]) : "")
                                 .font(.title)
                                 .bold()
@@ -46,19 +60,32 @@ struct OTPTextFieldView: View {
                     isFocused = true
                 }
                 
-                // TODO: CHANGE PRINT TO VIEW LOADING
+                //  TODO: CHANGE SHEET TO VIEW
                 Button("Submit") {
                     if otpCode.count == 6 {
                         if onSubmit() {
-                            print("Processing")
+                            if isPasswordRecovery {
+                                passwordRecoveryView = true
+                            }
+                            else {
+                                notPasswordRevoceryView = true
+                                dismiss()
+                            }
                             isFocused = false
                         }
                         else {
                             showAlert = true
                         }
-                    }                }
+                    }
+                }
                 .buttonStyle(GrowingButtonStyle())
+                .disabled(!isFormValid)
+                .opacity(isFormValid ? 1 : 0.6)
                 .padding(.top, 200)
+                .navigationDestination(isPresented: $passwordRecoveryView, destination: {
+                    PasswordRecoveryView()
+                        .navigationBarBackButtonHidden(true)
+                })
                 .alert("Wrong Code", isPresented: $showAlert) {
                     Button("OK", role: .cancel) { }
                 } message: {

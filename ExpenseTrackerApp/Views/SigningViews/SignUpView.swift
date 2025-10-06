@@ -41,11 +41,25 @@ struct SignUpView: View {
                     AuthProviderButtonView()
                     
                     Button("Sign Up") {
-                        
+                        viewModel.bottomSheet.toggle()
                     }
                     .disabled(viewModel.isFormValid)
                     .opacity(viewModel.isFormValid ? 0.6 : 1)
                     .buttonStyle(GrowingButtonStyle())
+                    .sheet(isPresented: $viewModel.bottomSheet) {
+                        OTPVerificationView(isPasswordRecovery: $viewModel.isPasswordRecovery)
+                            .onDisappear() {
+                                viewModel.isSheetDisappear.toggle()
+                            }
+                    }
+                    .navigationDestination(isPresented: $viewModel.isSheetDisappear) {
+                        //  TODO: CHANGE TO MAIN VIEW
+                        EmptyView()
+                            .navigationBarBackButtonHidden(true)
+                    }
+                    .onTapGesture {
+                        isFocused = false
+                    }
                     
                     HStack {
                         Text("Already have an account?")

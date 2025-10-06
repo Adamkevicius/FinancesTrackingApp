@@ -10,6 +10,8 @@ import SwiftUI
 struct OTPVerificationView: View {
     @StateObject private var viewModel = OTPVerificationViewModel()
     @Environment(\.dismiss) private var dismiss
+    @Binding var isPasswordRecovery: Bool
+
     
     var body: some View {
         NavigationStack {
@@ -26,7 +28,7 @@ struct OTPVerificationView: View {
                         .padding(.bottom, -150)
                         .padding(.horizontal, 25)
                     
-                    OTPTextFieldView(otpCode: $viewModel.otpCode, onSubmit: viewModel.verifyCode)
+                    OTPTextFieldView(otpCode: $viewModel.otpCode, onSubmit: viewModel.verifyCode, isPasswordRecovery: $isPasswordRecovery)
                         
                     
                     HStack(alignment: .center) {
@@ -56,8 +58,4 @@ struct OTPVerificationView: View {
             }
         }
     }
-}
-
-#Preview {
-    OTPVerificationView()
 }

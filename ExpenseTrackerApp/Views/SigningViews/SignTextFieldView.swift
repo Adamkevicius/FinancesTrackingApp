@@ -30,5 +30,6 @@ struct SignTextFieldView: View {
             
         }
         .textFieldStyle(RoundedTextFieldStyle())
+        .textInputAutocapitalization(.never)
     }
 }

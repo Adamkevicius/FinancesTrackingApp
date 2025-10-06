@@ -25,10 +25,12 @@ struct SecuredSignTextFieldView: View {
                     if isSecured {
                         SecureField(inputText, text: $text)
                             .textFieldStyle(RoundedTextFieldStyle())
+                            .textInputAutocapitalization(.never)
                     }
                     else {
                         TextField(inputText, text: $text)
                             .textFieldStyle(RoundedTextFieldStyle())
+                            .textInputAutocapitalization(.never)
                     }
                 }
             }

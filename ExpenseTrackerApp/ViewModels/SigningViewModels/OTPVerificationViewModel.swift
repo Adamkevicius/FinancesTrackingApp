@@ -10,6 +10,7 @@ import SwiftUI
 
 class OTPVerificationViewModel: ObservableObject {
     @Published var otpCode: String = ""
+    @Published var isRecovery: Bool = false
     
     func verifyCode() -> Bool {
         //  TODO: ADD OTP VERIFICATION LOGIC
