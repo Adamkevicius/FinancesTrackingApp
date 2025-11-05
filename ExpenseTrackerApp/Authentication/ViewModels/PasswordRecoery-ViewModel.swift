@@ -11,10 +11,11 @@ import SwiftUI
 class PasswordRecoeryViewModel: ObservableObject {
     @Published var password = ""
     @Published var confirmPassword = ""
+    
     @Published var showAlert = false
     @Published var emptyPasswordAlert = false
     @Published var emptyConfirmPasswordAlert = false
-    static var alertMessage = Notification.Name("Password changes successfully")
+    
     var isFormValid: Bool {
         password.isEmpty || confirmPassword.isEmpty
     }

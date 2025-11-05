@@ -11,7 +11,7 @@ struct SignInView: View {
     @StateObject private var viewModel = SignInViewModel()
     
     @FocusState private var isFocused: Bool
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -28,12 +28,17 @@ struct SignInView: View {
                         .padding(.bottom, 30)
                     
                     SignTextFieldView(title: "Email", inputText: "Enter your email", text: $viewModel.email)
+                        .textContentType(.emailAddress)
                         .focused($isFocused)
                     
                     SecuredSignTextFieldView(title: "Password", inputText: "Enter your password", text: $viewModel.password)
+                        .textContentType(.password)
                         .focused($isFocused)
                     
-                    NavigationLink {
+                    
+                    Button {
+                        viewModel.recoveryBottomSheet.toggle()
+                        viewModel.isPasswordRecovery.toggle()
                         //  TODO: add password recovery logic
                     } label: {
                         Text("Forgot password?")
@@ -43,19 +48,34 @@ struct SignInView: View {
                     }
                     .padding(.top, -20)
                     .padding(.leading, 170)
+                    .sheet(isPresented: $viewModel.recoveryBottomSheet) {
+                        PasswordRecoveryEmailView()
+                    }
                     
                     AuthProviderButtonView()
                     
                     Button {
-                        viewModel.bottomSheet.toggle()
+                        Task {
+                            try await viewModel.signIn()
+                        }
                     } label: {
                         Text("Sign In")
                     }
-                    .disabled(viewModel.isFormValid)
-                    .opacity(viewModel.isFormValid ? 0.6 : 1)
+                    .disabled(viewModel.isFormEmpty)
+                    .opacity(viewModel.isFormEmpty ? 0.6 : 1)
                     .buttonStyle(GrowingButtonStyle())
-                    .sheet(isPresented: $viewModel.bottomSheet) {
-                        OTPVerificationView()
+                    .sheet(isPresented: $viewModel.isAuthenticated) {
+                        OTPVerificationView(
+                            email: $viewModel.email,
+                            isPasswordRecovery: $viewModel.isPasswordRecovery
+                        )
+                    }
+                    .alert(isPresented: $viewModel.isApiErrorMessagePresented) {
+                        Alert(
+                            title: Text("Authentication failed."),
+                            message: Text(viewModel.errorMessage),
+                            dismissButton: .cancel(Text("OK"))
+                        )
                     }
                     .onTapGesture {
                         isFocused = false

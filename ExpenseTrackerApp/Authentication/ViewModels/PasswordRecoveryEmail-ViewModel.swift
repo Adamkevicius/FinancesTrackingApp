@@ -9,6 +9,7 @@ import Foundation
 
 class PasswordRecoveryEmailViewModel: ObservableObject {
     @Published var email = ""
+    
     @Published var isPresented = false
     @Published var emptyAlert = false
     @Published var wrongEmailAlert = false
