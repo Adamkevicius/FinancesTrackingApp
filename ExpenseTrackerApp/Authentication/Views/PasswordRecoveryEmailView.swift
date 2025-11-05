@@ -49,8 +49,13 @@ struct PasswordRecoveryEmailView: View {
                     .disabled(viewModel.isFormValid)
                     .opacity(viewModel.isFormValid ? 0.6 : 1)
                     .padding(.top)
-                    .navigationDestination(isPresented: $viewModel.isPresented, destination: {
-                        OTPVerificationView(isPasswordRecovery: $viewModel.isPasswordRecovery)
+                    .navigationDestination(
+                        isPresented: $viewModel.isPresented,
+                        destination: {
+                            OTPVerificationView(
+                                email: $viewModel.email,
+                                isPasswordRecovery: $viewModel.isPasswordRecovery
+                            )
                             .navigationBarBackButtonHidden(true)
                     })
                     .alert("Wrong email", isPresented: $viewModel.wrongEmailAlert) {

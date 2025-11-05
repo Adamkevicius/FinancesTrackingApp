@@ -29,33 +29,40 @@ struct SignUpView: View {
                     
                     Group {
                         SignTextFieldView(title: "Email", inputText: "Enter your email", text: $viewModel.email)
+                            .textContentType(.emailAddress)
                             .focused($isFocused)
                         
                         SignTextFieldView(title: "Username", inputText: "Enter your username", text: $viewModel.username)
+                            .textContentType(.username)
                             .focused($isFocused)
                         
                         SecuredSignTextFieldView(title: "Password", inputText: "Enter your password", text: $viewModel.password)
+                            .textContentType(.password)
                             .focused($isFocused)
                     }
                     
                     AuthProviderButtonView()
                     
                     Button("Sign Up") {
-                        viewModel.bottomSheet.toggle()
+                        Task {
+                            await viewModel.signUp()
+                        }
                     }
                     .disabled(viewModel.isFormValid)
                     .opacity(viewModel.isFormValid ? 0.6 : 1)
                     .buttonStyle(GrowingButtonStyle())
                     .sheet(isPresented: $viewModel.bottomSheet) {
-                        OTPVerificationView(isPasswordRecovery: $viewModel.isPasswordRecovery)
-                            .onDisappear() {
-                                viewModel.isSheetDisappear.toggle()
-                            }
+                        OTPVerificationView(
+                            email: $viewModel.email ,
+                            isPasswordRecovery: $viewModel.isPasswordRecovery
+                        )
                     }
-                    .navigationDestination(isPresented: $viewModel.isSheetDisappear) {
-                        //  TODO: CHANGE TO MAIN VIEW
-                        EmptyView()
-                            .navigationBarBackButtonHidden(true)
+                    .alert(isPresented: $viewModel.isApiErrorMessagePresented) {
+                        Alert(
+                            title: Text("Sign up failed."),
+                            message: Text(viewModel.errorMessage),
+                            dismissButton: .cancel(Text("OK"))
+                        )
                     }
                     .onTapGesture {
                         isFocused = false
