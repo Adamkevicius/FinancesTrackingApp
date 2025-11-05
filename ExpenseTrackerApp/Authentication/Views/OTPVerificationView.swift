@@ -46,9 +46,9 @@ struct OTPVerificationView: View {
                         PasswordRecoveryView()
                             .navigationBarBackButtonHidden(true)
                     })
-                    .navigationDestination(isPresented: $viewModel.verificationValid, destination: {
+                    .fullScreenCover(isPresented: $viewModel.verificationValid) {
                         MainView()
-                    })
+                    }
                     
                     HStack(alignment: .center) {
                         Text("Didin't received a code?")
@@ -65,13 +65,6 @@ struct OTPVerificationView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 .background(.primaryBackground.gradient)
-//                .alert(isPresented: $viewModel.isVerifyErrorPresented) {
-//                    Alert(
-//                        title: Text("Verification failed"),
-//                        message: Text(viewModel.verifyErrorMessage),
-//                        dismissButton: .cancel(Text("OK"))
-//                    )
-//                }
                 .alert(
                     isPresented: $viewModel.showAlert
                 ) {

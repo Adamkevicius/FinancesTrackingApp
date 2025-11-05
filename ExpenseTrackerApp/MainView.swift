@@ -19,6 +19,7 @@ struct MainView: View {
                 }
                 .navigationDestination(isPresented: $isLoggedOut) {
                     SignInView()
+                        .navigationBarBackButtonHidden(true)
                 }
             }
         }
