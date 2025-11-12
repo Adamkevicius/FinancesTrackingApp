@@ -47,7 +47,7 @@ struct OTPVerificationView: View {
                             .navigationBarBackButtonHidden(true)
                     })
                     .fullScreenCover(isPresented: $viewModel.verificationValid) {
-                        MainView()
+                        SummaryView()
                     }
                     
                     HStack(alignment: .center) {

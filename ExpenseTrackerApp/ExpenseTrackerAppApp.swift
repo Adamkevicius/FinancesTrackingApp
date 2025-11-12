@@ -13,7 +13,7 @@ struct ExpenseTrackerAppApp: App {
     var body: some Scene {
         WindowGroup {
             if sessionCheck.isLoggedIn {
-                MainView()
+                BottomNavigationView()
             }
             else {
                 SignInView()
