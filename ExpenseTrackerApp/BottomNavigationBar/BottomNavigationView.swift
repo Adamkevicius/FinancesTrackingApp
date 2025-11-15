@@ -17,7 +17,6 @@ struct BottomNavigationView: View {
                 SummaryView()
             }
             
-            
             Tab(value: 1) {
                 WalletView()
             }

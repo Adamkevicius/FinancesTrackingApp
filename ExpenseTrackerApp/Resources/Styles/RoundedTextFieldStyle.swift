@@ -16,7 +16,7 @@ struct RoundedTextFieldStyle: TextFieldStyle {
             .frame(height: 50)
             .background(.textFieldBackground)
             .brightness(0.4)
-            .clipShape(.rect(cornerRadius: 30))
+            .clipShape(.rect(cornerRadius: 15))
             .padding(.horizontal, 50)
             .padding(.bottom)
     }

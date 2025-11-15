@@ -38,7 +38,12 @@ struct OTPVerificationView: View {
                             try await viewModel.emailVerification(email, viewModel.otpCode)
                         }
                     }
-                    .buttonStyle(GrowingButtonStyle())
+                    .buttonStyle(GrowingButtonStyle(
+                        buttonColor: .primaryButtonClr,
+                        textColor: .primaryTextClr,
+                        width: 300,
+                        height: 50
+                    ))
                     .disabled(!viewModel.isFormValid(viewModel.otpCode))
                     .opacity(viewModel.isFormValid(viewModel.otpCode) ? 1 : 0.6)
                     .padding(.top)
@@ -47,7 +52,7 @@ struct OTPVerificationView: View {
                             .navigationBarBackButtonHidden(true)
                     })
                     .fullScreenCover(isPresented: $viewModel.verificationValid) {
-                        SummaryView()
+                        BottomNavigationView()
                     }
                     
                     HStack(alignment: .center) {

@@ -14,9 +14,11 @@ struct ExpenseTrackerAppApp: App {
         WindowGroup {
             if sessionCheck.isLoggedIn {
                 BottomNavigationView()
+                    .environmentObject(sessionCheck)
             }
             else {
                 SignInView()
+                    .environmentObject(sessionCheck)
             }
         }
     }

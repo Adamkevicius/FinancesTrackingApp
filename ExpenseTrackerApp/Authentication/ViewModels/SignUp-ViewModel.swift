@@ -32,6 +32,11 @@ class SignUpViewModel: ObservableObject {
             
             if success {
                     self.bottomSheet = true
+                
+                KeychainService.set(self.email, forKey: "email")
+                KeychainService.set(self.username, forKey: "username")
+                KeychainService.set("", forKey: "fullName")
+                KeychainService.set(self.password, forKey: "password")
             }
             else {
                     self.errorMessage = data

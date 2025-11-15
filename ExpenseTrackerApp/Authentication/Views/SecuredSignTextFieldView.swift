@@ -42,7 +42,7 @@ struct SecuredSignTextFieldView: View {
                     .tint(.gray)
             }
             .padding(.bottom, -10)
-            .padding(.leading, 230)
+            .padding(.leading, 250)
         }
     }
 }
