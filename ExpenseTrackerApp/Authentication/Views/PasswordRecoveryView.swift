@@ -51,7 +51,12 @@ struct PasswordRecoveryView: View {
                             viewModel.showAlert.toggle()
                         }
                     }
-                    .buttonStyle(GrowingButtonStyle())
+                    .buttonStyle(GrowingButtonStyle(
+                        buttonColor: .primaryButtonClr,
+                        textColor: .primaryTextClr,
+                        width: 300,
+                        height: 50
+                    ))
                     .disabled(viewModel.isFormValid)
                     .opacity(viewModel.isFormValid ? 0.6 : 1)
                     .padding(.top, 25)

@@ -50,7 +50,14 @@ struct SignUpView: View {
                     }
                     .disabled(viewModel.isFormValid)
                     .opacity(viewModel.isFormValid ? 0.6 : 1)
-                    .buttonStyle(GrowingButtonStyle())
+                    .buttonStyle(
+                        GrowingButtonStyle(
+                            buttonColor: .primaryButtonClr,
+                            textColor: .primaryTextClr,
+                            width: 300,
+                            height: 50
+                        )
+                    )
                     .sheet(isPresented: $viewModel.bottomSheet) {
                         OTPVerificationView(
                             email: $viewModel.email ,
