@@ -22,7 +22,7 @@ struct BottomNavigationView: View {
             }
             
             Tab(value: 2) {
-                PlaningView()
+                PlanningView()
             }
             
             Tab(value: 3) {

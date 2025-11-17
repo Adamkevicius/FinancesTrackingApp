@@ -48,8 +48,8 @@ class OTPVerificationViewModel: ObservableObject {
                     showAlert = true
                     otpVerificationAlerts = .verifyError
                 }
-            } catch ApiError.serverInternalError {
-                print("Could not connect to the server.")
+            } catch {
+                otpVerificationAlerts = .serverError
             }
         }
     }
@@ -87,6 +87,11 @@ class OTPVerificationViewModel: ObservableObject {
             case .resendError:
                 return Alert(
                     title: Text("Otp resend failed."),
+                    message: Text(resendErrorMessage),
+                    dismissButton: .cancel(Text("OK")))
+            case .serverError:
+                return Alert(
+                    title: Text("Server Error."),
                     message: Text(resendErrorMessage),
                     dismissButton: .cancel(Text("OK")))
         }
