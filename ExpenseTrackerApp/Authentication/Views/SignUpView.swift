@@ -45,7 +45,7 @@ struct SignUpView: View {
                     
                     Button("Sign Up") {
                         Task {
-                            await viewModel.signUp()
+                            try await viewModel.signUp()
                         }
                     }
                     .disabled(viewModel.isFormEmpty)

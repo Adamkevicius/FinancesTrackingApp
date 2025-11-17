@@ -41,17 +41,45 @@ class SignUpViewModel: ObservableObject {
         return true
     }
     
-    func signUp() async {
+//    func signUp() async {
+//        if isFormValid() {
+//            let signUpRequest = SignUpRequest(
+//                email: email,
+//                username: username,
+//                password: password
+//            )
+//            
+//            AuthService().signUp(requestBody: signUpRequest) { success, data in
+//                
+//                if success {
+//                    self.bottomSheet = true
+//                    
+//                    KeychainService.set(self.email, forKey: "email")
+//                    KeychainService.set(self.username, forKey: "username")
+//                    KeychainService.set("", forKey: "fullName")
+//                    KeychainService.set(self.password, forKey: "password")
+//                }
+//                else {
+//                    self.errorMessage = data
+//                    self.signingAlerts = .apiError
+//                    self.showAlert = true
+//                }
+//            }
+//        }
+//        
+//    }
+    
+    @MainActor
+    func signUp() async throws {
         if isFormValid() {
-            let signUpRequest = SignUpRequest(
-                email: email,
-                username: username,
-                password: password
-            )
+            let signUpRequest = SignUpRequest(email: email, username: username, password: password)
             
-            AuthService().signUp(requestBody: signUpRequest) { success, data in
+            do {
+                let signUpResponse = try await AuthService().signUp(
+                    requestBody: signUpRequest
+                )
                 
-                if success {
+                if signUpResponse.success {
                     self.bottomSheet = true
                     
                     KeychainService.set(self.email, forKey: "email")
@@ -60,13 +88,15 @@ class SignUpViewModel: ObservableObject {
                     KeychainService.set(self.password, forKey: "password")
                 }
                 else {
-                    self.errorMessage = data
+                    self.errorMessage = signUpResponse.message
                     self.signingAlerts = .apiError
                     self.showAlert = true
                 }
+            } catch {
+                signingAlerts = .serverError
+                showAlert = true
             }
         }
-        
     }
     
     func displayAlert() -> Alert {
@@ -80,6 +110,11 @@ class SignUpViewModel: ObservableObject {
                 return Alert(
                     title: Text("Validation error."),
                     message: Text("Invalid sign up credentials. Please try again."),
+                    dismissButton: .cancel(Text("OK")))
+            case .serverError:
+                return Alert(
+                    title: Text("Server error."),
+                    message: Text("Server connection error."),
                     dismissButton: .cancel(Text("OK")))
         }
     }

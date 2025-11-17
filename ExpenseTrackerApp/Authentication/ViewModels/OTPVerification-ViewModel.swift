@@ -50,6 +50,7 @@ class OTPVerificationViewModel: ObservableObject {
                 }
             } catch {
                 otpVerificationAlerts = .serverError
+                showAlert = true
             }
         }
     }

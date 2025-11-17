@@ -55,8 +55,7 @@ class SignInViewModel: ObservableObject {
                     showAlert = true
                 }
             } catch {
-                errorMessage = "Server connection error."
-                signingAlerts = .apiError
+                signingAlerts = .serverError
                 showAlert = true
             }
         }
@@ -76,6 +75,11 @@ class SignInViewModel: ObservableObject {
                     message: Text("Invalid sign in credentials. Please try again."),
                     dismissButton: .cancel(Text("OK"))
                 )
+            case .serverError:
+                return Alert(
+                    title: Text("Server error."),
+                    message: Text("Server connection error."),
+                    dismissButton: .cancel(Text("OK")))
         }
     }
 }
