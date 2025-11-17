@@ -41,34 +41,6 @@ class SignUpViewModel: ObservableObject {
         return true
     }
     
-//    func signUp() async {
-//        if isFormValid() {
-//            let signUpRequest = SignUpRequest(
-//                email: email,
-//                username: username,
-//                password: password
-//            )
-//            
-//            AuthService().signUp(requestBody: signUpRequest) { success, data in
-//                
-//                if success {
-//                    self.bottomSheet = true
-//                    
-//                    KeychainService.set(self.email, forKey: "email")
-//                    KeychainService.set(self.username, forKey: "username")
-//                    KeychainService.set("", forKey: "fullName")
-//                    KeychainService.set(self.password, forKey: "password")
-//                }
-//                else {
-//                    self.errorMessage = data
-//                    self.signingAlerts = .apiError
-//                    self.showAlert = true
-//                }
-//            }
-//        }
-//        
-//    }
-    
     @MainActor
     func signUp() async throws {
         if isFormValid() {

@@ -9,9 +9,12 @@ import SwiftUI
 
 struct OTPVerificationView: View {
     @StateObject private var viewModel = OTPVerificationViewModel()
+    
     @Binding var email: String
-    @Environment(\.dismiss) private var dismiss
     @Binding var isPasswordRecovery: Bool
+    
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var sessionCheck: ClientSessionService
 
     var body: some View {
         NavigationStack {
@@ -33,10 +36,10 @@ struct OTPVerificationView: View {
                     )
                     
                     Button("Submit") {
-                        // TODO: ISSUE WITH ERROR HANDLING
                         Task {
                             try await viewModel.emailVerification(email, viewModel.otpCode)
                         }
+                        sessionCheck.isLoggedIn.toggle()
                     }
                     .buttonStyle(GrowingButtonStyle(
                         buttonColor: .primaryButtonClr,
