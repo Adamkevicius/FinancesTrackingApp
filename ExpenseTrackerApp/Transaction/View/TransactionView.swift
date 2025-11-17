@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TransactionView: View {
+struct TransactionView: View {    
     var body: some View {
         ZStack {
             Text("TransactionView")
@@ -15,6 +15,7 @@ struct TransactionView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.primaryBackground)
     }
+
 }
 
 #Preview {

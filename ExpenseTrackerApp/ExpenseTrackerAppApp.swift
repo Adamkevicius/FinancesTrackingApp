@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct ExpenseTrackerAppApp: App {
     @StateObject private var sessionCheck = ClientSessionService()
+    
     var body: some Scene {
         WindowGroup {
             if sessionCheck.isLoggedIn {
@@ -20,26 +21,6 @@ struct ExpenseTrackerAppApp: App {
                 SignInView()
                     .environmentObject(sessionCheck)
             }
-        }
-    }
-}
-
-class ClientSessionService: ObservableObject {
-    @Published var isLoggedIn = false
-    
-    
-    init() {
-        Task(priority: .high) {
-            try await sessionCheck()
-        }
-    }
-    
-    @MainActor
-    func sessionCheck() async throws {
-        let sessionCheckResponse = try await AuthService().sessionTokenValidation()
-        
-        if sessionCheckResponse.success {
-            isLoggedIn = true
         }
     }
 }

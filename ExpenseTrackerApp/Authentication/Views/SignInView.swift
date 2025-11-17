@@ -11,7 +11,6 @@ struct SignInView: View {
     @StateObject private var viewModel = SignInViewModel()
     
     @FocusState private var isFocused: Bool
-
     var body: some View {
         NavigationStack {
             ZStack {

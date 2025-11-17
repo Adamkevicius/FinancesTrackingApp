@@ -25,47 +25,6 @@ class AuthService {
         }
     }
     
-//    func signUp(requestBody: SignUpRequest, completion: @escaping (Bool, String) -> Void) {
-//        
-//        guard let url = URL(string: "http://localhost:8080/authentication/signup") else {
-//            completion(false, "Invalid URL.")
-//            return
-//        }
-//        
-//        let body = requestBody
-//        
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpBody = try? JSONEncoder().encode(body)
-//        
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            
-//            guard let data = data else {
-//                completion(false, "Failed to fetch the data.")
-//                return
-//            }
-//            
-//            if let signUpResponse = try? JSONDecoder().decode(
-//                AuthResponse.self,
-//                from: data
-//            ) {
-//                let success = signUpResponse.success
-//                
-//                if success {
-//                    completion(success, signUpResponse.data ?? "Failed to fetch data.")
-//                }
-//                else {
-//                    completion(success, signUpResponse.message)
-//                }
-//            }
-//            else {
-//                completion(false, "Server internal error.")
-//            }
-//            
-//        }.resume()
-//    }
-    
     func signUp(requestBody: SignUpRequest) async throws -> AuthResponse {
         return try await createPostRequest(
             requestURL: "http://localhost:8080/authentication/signup",
