@@ -8,5 +8,5 @@
 import Foundation
 
 enum SigningAlerts {
-    case apiError, validationError
+    case apiError, validationError, serverError
 }
