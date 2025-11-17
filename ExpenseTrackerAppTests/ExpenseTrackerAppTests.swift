@@ -1,13 +1,13 @@
 //
-//  ExpenseTrackerAppTest.swift
-//  ExpenseTrackerAppTest
+//  ExpenseTrackerAppTests.swift
+//  ExpenseTrackerAppTests
 //
 //  Created by Matvej Adamkevicius on 15/11/2025.
 //
 
 import XCTest
 
-final class ExpenseTrackerAppTest: XCTestCase {
+final class ExpenseTrackerAppTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

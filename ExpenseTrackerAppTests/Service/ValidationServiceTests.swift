@@ -6,30 +6,103 @@
 //
 
 import XCTest
+@testable import ExpenseTrackerApp
 
 final class ValidationServiceTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    func testSuccessfulEmailValidation() {
+        //  given
+        let email = "test@gmail.com"
+        let validationService = ValidationService()
+        
+        //  when
+        let emailValidation = validationService.emailValidation(email: email)
+        
+        //  then
+        XCTAssertEqual(emailValidation, true)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testUnsuccessfulEmailValidation() {
+        //  given
+        let email = "testgmail.com"
+        let validationService = ValidationService()
+        
+        //  when
+        let emailValidation = validationService.emailValidation(email: email)
+        
+        //  then
+        XCTAssertEqual(emailValidation, false)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testSuccessfulUsernameValidation() {
+        //  given
+        let username = "test"
+        let validationService = ValidationService()
+        
+        //  when
+        let usernameValidation = validationService.usernameValidation(username: username)
+        
+        //  then
+        XCTAssertEqual(usernameValidation, true)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testUnsuccessfulUsernameValidation() {
+        //  given
+        let username = "test2"
+        let validationService = ValidationService()
+        
+        //  when
+        let usernameValidation = validationService.usernameValidation(username: username)
+        
+        //  then
+        XCTAssertEqual(usernameValidation, false)
     }
-
+    
+    func testSuccessfulFullNameValidation() {
+        //  given
+        let fullName = "John Doe"
+        let validationService = ValidationService()
+        
+        //  when
+        let fullNameValidation = validationService.fullNameValidation(fullName: fullName)
+        
+        //  then
+        XCTAssertEqual(fullNameValidation, true)
+    }
+    
+    func testUnsuccessfulFullNameValidation() {
+        //  given
+        let fullName = "john Doe"
+        let validationService = ValidationService()
+        
+        //  when
+        let fullNameValidation = validationService.fullNameValidation(fullName: fullName)
+        
+        //  then
+        XCTAssertEqual(fullNameValidation, false)
+    }
+    
+    func testSuccessfulPasswordValidation() {
+        //  given
+        let password = "Test123!"
+        let validationService = ValidationService()
+        
+        //  when
+        let passwordValidation = validationService.passwordValidation(password: password)
+        
+        //  then
+        XCTAssertEqual(passwordValidation, true)
+    }
+    
+    func testUnuccessfulPasswordValidation() {
+        //  given
+        let password = "test123"
+        let validationService = ValidationService()
+        
+        //  when
+        let passwordValidation = validationService.passwordValidation(password: password)
+        
+        //  then
+        XCTAssertEqual(passwordValidation, false)
+    }
 }
