@@ -76,12 +76,8 @@ struct SignInView: View {
                             isPasswordRecovery: $viewModel.isPasswordRecovery
                         )
                     }
-                    .alert(isPresented: $viewModel.isApiErrorMessagePresented) {
-                        Alert(
-                            title: Text("Authentication failed."),
-                            message: Text(viewModel.errorMessage),
-                            dismissButton: .cancel(Text("OK"))
-                        )
+                    .alert(isPresented: $viewModel.showAlert) {
+                        viewModel.displayAlerts()
                     }
                     .onTapGesture {
                         isFocused = false

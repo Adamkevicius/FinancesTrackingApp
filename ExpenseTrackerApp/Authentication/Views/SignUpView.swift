@@ -48,8 +48,8 @@ struct SignUpView: View {
                             await viewModel.signUp()
                         }
                     }
-                    .disabled(viewModel.isFormValid)
-                    .opacity(viewModel.isFormValid ? 0.6 : 1)
+                    .disabled(viewModel.isFormEmpty)
+                    .opacity(viewModel.isFormEmpty ? 0.6 : 1)
                     .buttonStyle(
                         GrowingButtonStyle(
                             buttonColor: .primaryButtonClr,
@@ -64,12 +64,8 @@ struct SignUpView: View {
                             isPasswordRecovery: $viewModel.isPasswordRecovery
                         )
                     }
-                    .alert(isPresented: $viewModel.isApiErrorMessagePresented) {
-                        Alert(
-                            title: Text("Sign up failed."),
-                            message: Text(viewModel.errorMessage),
-                            dismissButton: .cancel(Text("OK"))
-                        )
+                    .alert(isPresented: $viewModel.showAlert) {
+                        viewModel.displayAlert()
                     }
                     .onTapGesture {
                         isFocused = false

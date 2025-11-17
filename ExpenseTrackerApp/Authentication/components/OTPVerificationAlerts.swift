@@ -8,5 +8,5 @@
 import Foundation
 
 enum OTPVerificationAlerts {
-    case verifyError, resendError, resendSuccess
+    case verifyError, resendError, resendSuccess, serverError
 }

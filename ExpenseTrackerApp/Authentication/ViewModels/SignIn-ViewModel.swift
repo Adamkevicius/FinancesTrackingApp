@@ -16,32 +16,66 @@ class SignInViewModel: ObservableObject {
     @Published var recoveryBottomSheet = false
     @Published var isAuthenticated = false
     @Published var isPasswordRecovery = false
-    @Published var isFormValid = false
-    @Published var isApiErrorMessagePresented = false
+    @Published var showAlert = false
     
+    var signingAlerts: SigningAlerts = .apiError
+    
+    let validationService = ValidationService()
     
     var isFormEmpty: Bool {
         email.isEmpty || password.isEmpty
     }
     
-    // TODO: HANDLE ERRORS
+    func isFormValid() -> Bool {
+        if !validationService.emailValidation(email: email) ||
+           !validationService.passwordValidation(password: password)
+        {
+            self.signingAlerts = .validationError
+            self.showAlert = true
+            return false
+        }
+        
+        return true
+    }
+    
     @MainActor
     func signIn() async throws {
-        let signInRequest = SignInRequest(email: email, password: password)
-        
-        do {
-            let authResponse = try await AuthService().signIn(requestBody: signInRequest)
+        if isFormValid() {
+            let signInRequest = SignInRequest(email: email, password: password)
+            
+            do {
+                let authResponse = try await AuthService().signIn(requestBody: signInRequest)
                 
-            if authResponse.success {
-                isAuthenticated = true
+                if authResponse.success {
+                    isAuthenticated = true
+                }
+                else {
+                    errorMessage = authResponse.message
+                    signingAlerts = .apiError
+                    showAlert = true
+                }
+            } catch {
+                errorMessage = "Server connection error."
+                signingAlerts = .apiError
+                showAlert = true
             }
-            else {
-                errorMessage = authResponse.message
-                isApiErrorMessagePresented = true
-            }
-        } catch ApiError.serverInternalError {
-            errorMessage = "Could not connect to the server."
-            isApiErrorMessagePresented = true
+        }
+    }
+    
+    func displayAlerts() -> Alert {
+        switch signingAlerts {
+            case .apiError:
+                return Alert(
+                    title: Text("Sign In Error"),
+                    message: Text(errorMessage),
+                    dismissButton: .cancel(Text("OK"))
+                )
+            case .validationError:
+                return Alert(
+                    title: Text("Validation Error"),
+                    message: Text("Invalid sign in credentials. Please try again."),
+                    dismissButton: .cancel(Text("OK"))
+                )
         }
     }
 }
