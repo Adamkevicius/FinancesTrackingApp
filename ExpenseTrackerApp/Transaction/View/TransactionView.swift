@@ -7,13 +7,134 @@
 
 import SwiftUI
 
-struct TransactionView: View {    
+struct TransactionView: View {
+    @StateObject private var viewModel = TransactionViewModel()
+    
+    @Environment(\.dismiss) private var dismiss
+    
+    @FocusState private var isFocused: Bool
+    
     var body: some View {
         ZStack {
-            Text("TransactionView")
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title)
+                    .foregroundStyle(.black)
+            }
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
+            .padding([.top, .leading], 25)
+            
+            VStack {
+                VStack(spacing: 15) {
+                    Picker(
+                        "", selection: $viewModel.transactionCategory
+                    ) {
+                        ForEach(TransactionCategory.allCases) { category in
+                            Text(category.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .background(.primaryBackground)
+                    .padding(.horizontal, 25)
+                    .padding(.top, 90)
+                    
+                    if viewModel.transactionCategory == .expense {
+                        TransactionCategoryPicker(
+                            isExpense: true,
+                            viewModel: viewModel
+                        )
+                    }
+                    else {
+                        TransactionCategoryPicker(
+                            isExpense: false,
+                            viewModel: viewModel
+                        )
+                    }
+                    
+                    DatePicker("Date & Time", selection: $viewModel.occuredOn)
+                        .padding(.horizontal, 25)
+                        .bold()
+                }
+                
+                Spacer()
+                            
+                VStack {
+                    TextField("", value: $viewModel.amount, format: .number)
+                        .keyboardType(.decimalPad)
+                        .font(.system(size: 80))
+                        .multilineTextAlignment(.center)
+                        .padding([.bottom, .top], 50)
+                        .tint(.clear)
+                        .focused($isFocused)
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text("Title")
+                            .font(.system(size: 16))
+                            .padding(.trailing, 310)
+                            .bold()
+                        
+                        TextField(
+                            "",
+                            text: $viewModel.title,
+                        )
+                            .padding(10)
+                            .background(.textFieldBackground)
+                            .brightness(0.4)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 25)
+                            .padding(.bottom, 25)
+                            .bold()
+                            .focused($isFocused)
+                        
+                        Text("Description")
+                            .font(.system(size: 16))
+                            .padding(.trailing, 250)
+                            .bold()
+                        
+                        
+                        TextEditor(
+                            text: $viewModel.description,
+                        )
+                            .padding(.horizontal, 10)
+                            .frame(height: 100)
+                            .background(.textFieldBackground)
+                            .brightness(0.4)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 25)
+                            .padding(.bottom, 25)
+                            .lineLimit(1...5)
+                            .bold()
+                            .focused($isFocused)
+                        
+                        Button("Add") {
+
+                        }
+                        .buttonStyle(
+                            GrowingButtonStyle(
+                                buttonColor: .primaryButtonClr,
+                                textColor: .primaryTextClr,
+                                width: 350,
+                                height: 50
+                            )
+                        )
+                    }
+                }
+                .padding(.bottom)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.primaryBackground)
+        .onTapGesture {
+            isFocused = false
+        }
     }
 
 }

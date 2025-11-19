@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SummaryView: View {
-    @State private var isLoggedOut = false
     var body: some View {
         NavigationStack {
             ZStack {

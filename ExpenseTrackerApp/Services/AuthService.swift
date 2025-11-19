@@ -27,28 +27,28 @@ class AuthService {
     
     func signUp(requestBody: SignUpRequest) async throws -> AuthResponse {
         return try await createPostRequest(
-            requestURL: "http://localhost:8080/authentication/signup",
+            requestURL: "http://localhost:8080/api/v1/authentication/signup",
             requestBody: requestBody
         )
     }
     
     func signIn(requestBody: SignInRequest) async throws -> AuthResponse {
         return try await createPostRequest(
-            requestURL: "http://localhost:8080/authentication/login",
+            requestURL: "http://localhost:8080/api/v1/authentication/login",
             requestBody: requestBody
         )        
     }
     
     func emailVerification(requestBody: EmailVerificationRequest) async throws -> AuthResponse {
         return try await createPostRequest(
-            requestURL: "http://localhost:8080/authentication/verification-code/verify",
+            requestURL: "http://localhost:8080/api/v1/authentication/verification-code/verify",
             requestBody: requestBody
         )
     }
     
     func otpResend(requestBody: OtpResendRequest) async throws -> AuthResponse {
         return try await createPostRequest(
-            requestURL: "http://localhost:8080/authentication/verification-code/resend",
+            requestURL: "http://localhost:8080/api/v1/authentication/verification-code/resend",
             requestBody: requestBody
         )
     }
@@ -56,7 +56,7 @@ class AuthService {
     func sessionTokenValidation() async throws -> AuthResponse {
         var request = URLRequest(
             url: URL(
-                string: "http://localhost:8080/authentication/check-session"
+                string: "http://localhost:8080/api/v1/authentication/check-session"
             )!
         )
                 

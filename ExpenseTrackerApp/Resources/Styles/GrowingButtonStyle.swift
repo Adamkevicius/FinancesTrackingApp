@@ -19,7 +19,7 @@ struct GrowingButtonStyle: ButtonStyle {
             .frame(width: width, height: height)
             .background(buttonColor)
             .clipShape(.rect(cornerRadius: 10))
-            .foregroundStyle(textColor)
+            .foregroundStyle(textColor).bold()
             .hoverEffect(.lift)
             .scaleEffect(configuration.isPressed ? 1.15 : 1)
             .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
