@@ -11,6 +11,13 @@ class ClientSessionService: ObservableObject {
     @Published var isLoggedIn = false
     
     @MainActor
+    init() {
+        Task(priority: .high) {
+            try await sessionCheck()
+        }
+    }
+    
+    @MainActor
     func sessionCheck() async throws {
         let sessionCheckResponse = try await AuthService().sessionTokenValidation()
         

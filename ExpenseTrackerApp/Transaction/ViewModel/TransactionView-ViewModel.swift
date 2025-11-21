@@ -12,7 +12,34 @@ class TransactionViewModel : ObservableObject {
     @Published var expenseCategory: ExpenseCategory = .essentialExpenses
     @Published var incomeCategory: IncomeCategory = .primary
     @Published var occuredOn =  Date.now
-    @Published var amount: Int = 0
+    @Published var amount: String = ""
     @Published var title: String = ""
-    @Published var description: String = ""    
+    @Published var description: String = ""
+    
+    @Published var firestore = FirestoreService()
+    
+    var isFormEmpty: Bool {
+        amount.isEmpty || title.isEmpty
+    }
+    
+    func createTransaction() async {
+        if !isFormEmpty {
+            
+            let transaction = Transaction(
+                type: transactionCategory.rawValue,
+                transactionCategory: transactionCategory == .expense ? "expense" : "income",
+                date: occuredOn,
+                amount: (amount as NSString).doubleValue,
+                title: title,
+                description: description,
+                userId: KeychainService<String>.get("userId")!
+            )
+            
+            do {
+                try await firestore.createDocument(transaction: transaction)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
