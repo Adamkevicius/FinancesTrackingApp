@@ -74,4 +74,21 @@ class AuthService {
             throw ApiError.invalidData
         }
     }
+    
+    func getUserId(email: String) async throws -> AuthResponse {
+        var request = URLRequest(
+            url: URL(
+                string: "http://localhost:8080/api/v1/user/id/\(email)"
+            )!
+        )
+            
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(AuthResponse.self, from: data)
+        } catch {
+            throw ApiError.invalidData
+        }
+    }
 }
