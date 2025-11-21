@@ -54,6 +54,18 @@ class SignUpViewModel: ObservableObject {
                 if signUpResponse.success {
                     self.bottomSheet = true
                     
+                    do {
+                        let getUserIdResponse = try await AuthService().getUserId(
+                            email: email
+                        )
+                        
+                        KeychainService
+                            .set(getUserIdResponse.data, forKey: "userId")
+
+                    } catch {
+                        throw ApiError.serverInternalError
+                    }
+                    
                     KeychainService.set(self.email, forKey: "email")
                     KeychainService.set(self.username, forKey: "username")
                     KeychainService.set("", forKey: "fullName")
