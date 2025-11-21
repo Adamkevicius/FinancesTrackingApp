@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct ExpenseTrackerAppApp: App {
     @StateObject private var sessionCheck = ClientSessionService()
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {

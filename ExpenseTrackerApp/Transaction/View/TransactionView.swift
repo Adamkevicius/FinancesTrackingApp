@@ -13,7 +13,7 @@ struct TransactionView: View {
     @Environment(\.dismiss) private var dismiss
     
     @FocusState private var isFocused: Bool
-    
+        
     var body: some View {
         ZStack {
             Button {
@@ -65,8 +65,8 @@ struct TransactionView: View {
                 Spacer()
                             
                 VStack {
-                    TextField("", value: $viewModel.amount, format: .number)
-                        .keyboardType(.decimalPad)
+                    TextField("0", text: $viewModel.amount)
+                        .onlyNumbers(text: $viewModel.amount)
                         .font(.system(size: 80))
                         .multilineTextAlignment(.center)
                         .padding([.bottom, .top], 50)
@@ -115,16 +115,20 @@ struct TransactionView: View {
                             .focused($isFocused)
                         
                         Button("Add") {
-
+                            Task {
+                                await viewModel.createTransaction()
+                            }
                         }
                         .buttonStyle(
                             GrowingButtonStyle(
-                                buttonColor: .primaryButtonClr,
+                                buttonColor: viewModel.isFormEmpty ? .primaryButtonClr
+                                    .opacity(0.45) : .primaryButtonClr,
                                 textColor: .primaryTextClr,
                                 width: 350,
                                 height: 50
                             )
                         )
+                        .disabled(viewModel.isFormEmpty ? true : false)
                     }
                 }
                 .padding(.bottom)
