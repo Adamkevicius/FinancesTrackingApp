@@ -28,7 +28,7 @@ struct BottomNavigationView: View {
             Tab(value: 3) {
                 ProfileView()
             }
-            
+             
         }
         .background(.primaryBackground)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

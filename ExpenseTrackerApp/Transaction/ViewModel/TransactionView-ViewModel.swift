@@ -27,7 +27,7 @@ class TransactionViewModel : ObservableObject {
             
             let transaction = Transaction(
                 type: transactionCategory.rawValue,
-                transactionCategory: transactionCategory == .expense ? "expense" : "income",
+                transactionCategory: transactionCategory == .expense ? expenseCategory.rawValue : incomeCategory.rawValue,
                 date: occuredOn,
                 amount: (amount as NSString).doubleValue,
                 title: title,

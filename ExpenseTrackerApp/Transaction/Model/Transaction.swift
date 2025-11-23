@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 struct Transaction: Codable, Identifiable {
-    var id = UUID()
+    @DocumentID var id: String?
     
     var type: String
     var transactionCategory: String

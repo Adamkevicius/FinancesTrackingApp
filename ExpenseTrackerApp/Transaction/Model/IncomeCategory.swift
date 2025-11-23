@@ -14,4 +14,13 @@ enum IncomeCategory: String, CaseIterable, Identifiable {
     case additional = "Addtional"
     
     var id: Self { self }
+    
+    var name: String {
+        switch self {
+            case .primary: return "💼"
+            case .investment: return "📈"
+            case .passive: return "💤"
+            case .additional: return "💸"
+        }
+    }
 }
