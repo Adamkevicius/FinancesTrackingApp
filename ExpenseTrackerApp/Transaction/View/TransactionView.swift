@@ -118,6 +118,7 @@ struct TransactionView: View {
                             Task {
                                 await viewModel.createTransaction()
                             }
+                            dismiss()
                         }
                         .buttonStyle(
                             GrowingButtonStyle(

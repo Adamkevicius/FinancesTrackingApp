@@ -17,4 +17,16 @@ enum ExpenseCategory: String, CaseIterable, Identifiable {
     case additional = "Additional"
     
     var id: Self { self }
+    
+    var name: String {
+        switch self {
+            case .essentialExpenses: return "🛒"
+            case .financialObligations: return "🧾"
+            case .lifestyle: return "🛍️"
+            case .entertainment: return "🎳"
+            case .work: return "💼"
+            case .education: return "📚"
+            case .additional: return "💸"
+        }
+    }
 }
