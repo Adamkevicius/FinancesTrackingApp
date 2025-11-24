@@ -57,7 +57,7 @@ struct TransactionView: View {
                         )
                     }
                     
-                    DatePicker("Date & Time", selection: $viewModel.occuredOn)
+                    DatePicker("Date & Time", selection: $viewModel.occuredOn, displayedComponents: [.date])
                         .padding(.horizontal, 25)
                         .bold()
                 }

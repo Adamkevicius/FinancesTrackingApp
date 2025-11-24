@@ -37,7 +37,7 @@ struct ListItem: View {
                 
                 Spacer()
                 
-                Text(String(transaction.amount))
+                Text(String(format: "%g", transaction.amount))
                     .bold()
                     .foregroundStyle(transaction.type == "Expense" ? .negativeButton : .navMainButton)
             }
