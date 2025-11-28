@@ -8,7 +8,7 @@
   <div>
     <h2> <b> Current Futures </b> </h2>
     <ul>
-      <li> Custom-built Authentication Service: </li>
+      <li> Custom-built Authentication API: </li>
       <p> <a href="https://github.com/Adamkevicius/UserAuthenticationAPI">Link to project</a> </p>
       <li> Adding new transactions: </li>
       <p> Create new transactions. </p>
